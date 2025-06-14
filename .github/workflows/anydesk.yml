@@ -12,13 +12,7 @@ jobs:
           choco install anydesk -y
           Start-Sleep -Seconds 30
 
-      - name: Mostrar AnyDesk ID y mantener la VM activa
+      - name: Abrir AnyDesk y dejar la VM encendida
         run: |
-          Write-Output "Esperando 30 segundos para que AnyDesk arranque..."
-          Start-Sleep -Seconds 30
-
-          Write-Output "Proceso AnyDesk:"
-          Get-Process | Where-Object { $_.ProcessName -like "*anydesk*" }
-
-          Write-Output "Abre el ícono de AnyDesk en la VM para ver el ID en pantalla."
+          Write-Output "Abre AnyDesk desde el icono en el escritorio para ver tu ID."
           Start-Sleep -Seconds 3600
