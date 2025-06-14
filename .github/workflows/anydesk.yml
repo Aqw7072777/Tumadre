@@ -11,8 +11,14 @@ jobs:
         run: |
           choco install anydesk -y
           Start-Sleep -Seconds 30
-      - name: Mostrar AnyDesk ID
+
+      - name: Mostrar AnyDesk ID y mantener la VM activa
         run: |
-          $id = (Get-Content "$env:PROGRAMDATA\AnyDesk\ad.mad" | Select-String -Pattern "^[0-9]+$").Matches.Value
-          Write-Output "AnyDesk ID: $id"
+          Write-Output "Esperando 30 segundos para que AnyDesk arranque..."
+          Start-Sleep -Seconds 30
+
+          Write-Output "Proceso AnyDesk:"
+          Get-Process | Where-Object { $_.ProcessName -like "*anydesk*" }
+
+          Write-Output "Abre el ícono de AnyDesk en la VM para ver el ID en pantalla."
           Start-Sleep -Seconds 3600
