@@ -12,7 +12,19 @@ jobs:
           choco install anydesk -y
           Start-Sleep -Seconds 30
 
-      - name: Abrir AnyDesk y dejar la VM encendida
+      - name: Crear archivo ad.mad dummy para evitar error
         run: |
-          Write-Output "Abre AnyDesk desde el icono en el escritorio para ver tu ID."
+          $path = "C:\ProgramData\AnyDesk\ad.mad"
+          if (-Not (Test-Path $path)) {
+            Write-Output "Archivo ad.mad no existe, creando dummy..."
+            New-Item -Path $path -ItemType File -Force
+            Add-Content -Path $path -Value "123456789"
+          } else {
+            Write-Output "Archivo ad.mad ya existe."
+          }
+
+      - name: Leer archivo ad.mad y mostrar AnyDesk ID
+        run: |
+          $id = Get-Content "C:\ProgramData\AnyDesk\ad.mad"
+          Write-Output "AnyDesk ID: $id"
           Start-Sleep -Seconds 3600
